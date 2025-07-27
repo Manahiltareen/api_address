@@ -1,11 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_utils/src/get_utils/get_utils.dart';
+
 import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/app_dimensions.dart';
 import 'package:api_address/config/font_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:get/get_utils/src/get_utils/get_utils.dart';
-
 
 enum InputValidationType {
   email,
@@ -13,7 +12,7 @@ enum InputValidationType {
   password,
   confirmPassword,
   name,
-  id, // Example for ID validation
+  id,
   none,
 }
 
@@ -25,7 +24,7 @@ class AppTextFormField extends StatelessWidget {
   final bool obscureText;
   final VoidCallback? onToggleObscureText;
   final InputValidationType validationType;
-  final String? Function(String?)? customValidator; // For specific cases like confirm password
+  final String? Function(String?)? customValidator;
 
   const AppTextFormField({
     super.key,
@@ -36,44 +35,31 @@ class AppTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.onToggleObscureText,
     this.validationType = InputValidationType.none,
-    this.customValidator, // Pass a custom validator if needed
+    this.customValidator,
   });
 
   String? _validator(String? value) {
-    // If a customValidator is provided, use it first
     if (customValidator != null) {
       final customResult = customValidator!(value);
-      if (customResult != null) {
-        return customResult;
-      }
+      if (customResult != null) return customResult;
     }
 
     if (value == null || value.isEmpty) {
-      // Return a generic message if empty, unless overridden by customValidator
       return 'Please enter $hintText';
     }
 
     switch (validationType) {
       case InputValidationType.email:
-        if (!GetUtils.isEmail(value)) {
-          return 'Please enter a valid email';
-        }
+        if (!GetUtils.isEmail(value)) return 'Please enter a valid email';
         break;
       case InputValidationType.phoneNumber:
-      // A more robust phone number regex might be needed for specific regions
-        if (!GetUtils.isPhoneNumber(value)) { // Basic check, might need refinement for PAK numbers
-          return 'Please enter a valid phone number';
-        }
+        if (!GetUtils.isPhoneNumber(value)) return 'Please enter a valid phone number';
         break;
       case InputValidationType.password:
-        if (value.length < 6) {
-          return 'Password must be at least 6 characters';
-        }
+        if (value.length < 6) return 'Password must be at least 6 characters';
         break;
       case InputValidationType.name:
-        if (value.length < 2) {
-          return 'Name must be at least 2 characters';
-        }
+        if (value.length < 2) return 'Name must be at least 2 characters';
         break;
       case InputValidationType.id:
         if (!GetUtils.isNumericOnly(value) || value.length != 7) {
@@ -81,70 +67,61 @@ class AppTextFormField extends StatelessWidget {
         }
         break;
       case InputValidationType.confirmPassword:
-      // This is primarily handled by customValidator in signup screen
-      // If no custom validator, just ensure it's not empty (already handled above)
         break;
       case InputValidationType.none:
-      // No specific validation other than not empty
         break;
     }
-    return null; // Return null if valid
+    return null;
+  }
+
+  OutlineInputBorder _buildBorder(Color color) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusDefault),
+      borderSide: BorderSide(color: color, width: 1.0),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppDimensions.inputFieldHeight, // Fixed height for consistency
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground, // White background
-        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusDefault),
-        border: Border.all(color: AppColors.borderColor), // Light border
-        boxShadow: [
-          // Subtle shadow for the "inward" effect
-          BoxShadow(
-            color: AppColors.shadowColor.withOpacity(0.05),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        obscureText: obscureText,
-        style: FontUtils.inputText,
-        validator: _validator,
-        decoration: InputDecoration(
-          prefixIcon: FaIcon(
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+      style: FontUtils.inputText,
+      validator: _validator,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.cardBackground,
+        hintText: hintText,
+        hintStyle: FontUtils.hintText,
+        prefixIcon: Padding(
+          padding: const EdgeInsets.only(
+            top: 6,
+              left: 12.0, right: 8.0),
+          child: FaIcon(
             prefixIcon,
             color: AppColors.primaryBlue,
             size: AppDimensions.iconSizeSmall,
           ),
-          hintText: hintText,
-          hintStyle: FontUtils.hintText,
-          border: InputBorder.none, // No border for the TextFormField itself
-          contentPadding: const EdgeInsets.symmetric(vertical: AppDimensions.paddingDefault), // Correct padding
-          errorStyle: const TextStyle(fontSize: 12.0), // Smaller error text
-          errorBorder: OutlineInputBorder( // Red border on error
-            borderRadius: BorderRadius.circular(AppDimensions.borderRadiusDefault),
-            borderSide: const BorderSide(color: AppColors.errorRed, width: 1.0),
-          ),
-          focusedErrorBorder: OutlineInputBorder( // Red border when focused on error
-            borderRadius: BorderRadius.circular(AppDimensions.borderRadiusDefault),
-            borderSide: const BorderSide(color: AppColors.errorRed, width: 1.0),
-          ),
-          suffixIcon: onToggleObscureText != null
-              ? IconButton(
-            icon: FaIcon(
-              obscureText ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
-              color: AppColors.mediumGrey,
-              size: AppDimensions.iconSizeSmall,
-            ),
-            onPressed: onToggleObscureText,
-          )
-              : null,
         ),
+        prefixIconConstraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+        suffixIcon: onToggleObscureText != null
+            ? IconButton(
+          icon: FaIcon(
+            obscureText ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+            color: AppColors.mediumGrey,
+            size: AppDimensions.iconSizeSmall,
+          ),
+          onPressed: onToggleObscureText,
+        )
+            : null,
+        contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 12.0),
+        border: _buildBorder(AppColors.borderColor),
+        focusedBorder: _buildBorder(AppColors.primaryBlue),
+        enabledBorder: _buildBorder(AppColors.borderColor),
+        errorBorder: _buildBorder(AppColors.errorRed),
+        focusedErrorBorder: _buildBorder(AppColors.errorRed),
+        errorStyle: const TextStyle(fontSize: 12.0),
       ),
     );
   }

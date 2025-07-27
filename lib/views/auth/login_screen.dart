@@ -2,6 +2,7 @@ import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/app_dimensions.dart';
 import 'package:api_address/config/font_utils.dart';
 import 'package:api_address/controllers/logincontroller.dart';
+import 'package:api_address/views/shared/custom_auth_header.dart';
 import 'package:api_address/views/shared/custom_button.dart';
 import 'package:api_address/views/shared/text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 
 
@@ -20,122 +22,114 @@ class LoginScreen extends StatelessWidget {
     final LoginController controller = Get.put(LoginController());
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppColors.darkGrey),
-          onPressed: () {
-            context.pop();
-          },
-        ),
-        title: const Text(
-          'Login',
-          style: FontUtils.appBarTitle,
-        ),
-        centerTitle: true,
-      ),
+      backgroundColor: AppColors.lightBackground, // Use light background for the rest of the screen
+      // No AppBar when using custom header
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingLarge),
-        child: Form(
-          key: controller.loginFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: AppDimensions.paddingLarge * 2),
-              const Text(
-                'Welcome Back',
-                style: FontUtils.heading1,
-              ),
-              SizedBox(height: AppDimensions.paddingLarge),
-              AppTextFormField(
-                controller: controller.phoneController,
-                hintText: 'Phone number',
-                prefixIcon: FontAwesomeIcons.phone,
-                keyboardType: TextInputType.phone,
-                validationType: InputValidationType.phoneNumber,
-              ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              Obx(() => AppTextFormField(
-                controller: controller.passwordController,
-                hintText: 'Password',
-                prefixIcon: FontAwesomeIcons.lock,
-                obscureText: controller.obscureText.value,
-                onToggleObscureText: controller.togglePasswordVisibility,
-                validationType: InputValidationType.password,
-              )),
-              SizedBox(height: AppDimensions.paddingSmall),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    Get.snackbar(
-                      'Info',
-                      'Forgot Password functionality is not yet implemented.',
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
-                  },
-                  child: Text(
-                    'Forgot Password?',
-                    style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
-                  ),
-                ),
-              ),
-              SizedBox(height: AppDimensions.paddingLarge * 1.5),
-              Center(
-                child: CustomWaveButton(
-                  text: 'Sign in',
-                  onTap: () => controller.login(context),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                ),
-              ),
-              SizedBox(height: AppDimensions.paddingLarge),
-              Center(
-                child: Text.rich(
-                  TextSpan(
-                    text: "Don't have an account? ",
-                    style: FontUtils.bodyTextSmall,
-                    children: [
-                      TextSpan(
-                        text: 'Sign up',
-                        style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            context.go('/signup');
-                          },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAuthHeader(
+              title: 'Welcome Back', // Title for login screen
+              showBackButton: false, // No back button on login for now (can change if needed)
+            ),
+            Padding( // Add padding around the rest of the content
+              padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingLarge),
+              child: Form(
+                key: controller.loginFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: AppDimensions.paddingLarge), // Space below header
+                    AppTextFormField(
+                      controller: controller.phoneController,
+                      hintText: 'Phone number',
+                      prefixIcon: FontAwesomeIcons.phone,
+                      keyboardType: TextInputType.phone,
+                      validationType: InputValidationType.phoneNumber,
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    Obx(() => AppTextFormField(
+                      controller: controller.passwordController,
+                      hintText: 'Password',
+                      prefixIcon: FontAwesomeIcons.lock,
+                      obscureText: controller.obscureText.value,
+                      onToggleObscureText: controller.togglePasswordVisibility,
+                      validationType: InputValidationType.password,
+                    )),
+                    SizedBox(height: AppDimensions.paddingSmall),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Get.snackbar(
+                            'Info',
+                            'Forgot Password functionality is not yet implemented.',
+                            snackPosition: SnackPosition.BOTTOM,
+                          );
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: AppDimensions.paddingLarge * 1.5),
+                    Center(
+                      child: CustomWaveButton(
+                        text: 'Sign in',
+                        onTap: () => controller.login(context),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                      ),
+                    ),
+                    SizedBox(height: AppDimensions.paddingLarge),
+                    Center(
+                      child: Text.rich(
+                        TextSpan(
+                          text: "Don't have an account? ",
+                          style: FontUtils.bodyTextSmall,
+                          children: [
+                            TextSpan(
+                              text: 'Sign up',
+                              style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  context.go('/signup');
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    Center(
+                      child: Text(
+                        'Or sign in with',
+                        style: FontUtils.bodyTextSmall.copyWith(color: AppColors.mediumGrey),
+                      ),
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildSocialIconFA(
+                          FontAwesomeIcons.google,
+                          AppColors.primaryBlue,
+                              () { /* Google sign-in logic */ },
+                        ),
+                        SizedBox(width: AppDimensions.paddingDefault),
+                        _buildSocialIconFA(
+                          FontAwesomeIcons.facebookF,
+                          const Color(0xFF1877F2),
+                              () { /* Facebook sign-in logic */ },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: AppDimensions.paddingLarge),
+                  ],
                 ),
               ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              Center(
-                child: Text(
-                  'Or sign in with',
-                  style: FontUtils.bodyTextSmall.copyWith(color: AppColors.mediumGrey),
-                ),
-              ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildSocialIconFA(
-                    FontAwesomeIcons.google,
-                    AppColors.primaryBlue,
-                        () { /* Google sign-in logic */ },
-                  ),
-                  SizedBox(width: AppDimensions.paddingDefault),
-                  _buildSocialIconFA(
-                    FontAwesomeIcons.facebookF,
-                    const Color(0xFF1877F2),
-                        () { /* Facebook sign-in logic */ },
-                  ),
-                ],
-              ),
-              SizedBox(height: AppDimensions.paddingLarge),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

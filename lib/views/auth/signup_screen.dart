@@ -2,6 +2,7 @@ import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/app_dimensions.dart';
 import 'package:api_address/config/font_utils.dart';
 import 'package:api_address/controllers/signup_controller.dart';
+import 'package:api_address/views/shared/custom_auth_header.dart';
 import 'package:api_address/views/shared/custom_button.dart';
 import 'package:api_address/views/shared/text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:get/get.dart'; // Import GetX
 
 
 
+
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
 
@@ -25,130 +27,122 @@ class SignupScreen extends StatelessWidget {
     final SignupController controller = Get.put(SignupController());
 
     return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppColors.darkGrey),
-          onPressed: () {
-            context.pop();
-          },
-        ),
-        title: const Text(
-          'Sign Up',
-          style: FontUtils.appBarTitle,
-        ),
-        centerTitle: true,
-      ),
+      backgroundColor: AppColors.lightBackground, // Use light background for the rest of the screen
+      // No AppBar when using custom header
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingLarge),
-        child: Form(
-          key: controller.signupFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: AppDimensions.paddingLarge * 2),
-              const Text(
-                'Create an Account',
-                style: FontUtils.heading1,
-              ),
-              SizedBox(height: AppDimensions.paddingLarge),
-              AppTextFormField(
-                controller: controller.fullNameController,
-                hintText: 'Full Name',
-                prefixIcon: FontAwesomeIcons.user,
-                validationType: InputValidationType.name,
-              ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              AppTextFormField(
-                controller: controller.phoneController,
-                hintText: 'Phone number',
-                prefixIcon: FontAwesomeIcons.phone,
-                keyboardType: TextInputType.phone,
-                validationType: InputValidationType.phoneNumber,
-              ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              AppTextFormField(
-                controller: controller.emailController,
-                hintText: 'Email Address (Optional)',
-                prefixIcon: FontAwesomeIcons.envelope,
-                keyboardType: TextInputType.emailAddress,
-                validationType: InputValidationType.email,
-              ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              Obx(() => AppTextFormField(
-                controller: controller.passwordController,
-                hintText: 'Password',
-                prefixIcon: FontAwesomeIcons.lock,
-                obscureText: controller.obscurePassword.value,
-                onToggleObscureText: controller.togglePasswordVisibility,
-                validationType: InputValidationType.password,
-              )),
-              SizedBox(height: AppDimensions.paddingDefault),
-              Obx(() => AppTextFormField(
-                controller: controller.confirmPasswordController,
-                hintText: 'Confirm Password',
-                prefixIcon: FontAwesomeIcons.lock,
-                obscureText: controller.obscureConfirmPassword.value,
-                onToggleObscureText: controller.toggleConfirmPasswordVisibility,
-                validationType: InputValidationType.confirmPassword,
-                customValidator: controller.confirmPasswordValidator, // Use custom validator
-              )),
-              SizedBox(height: AppDimensions.paddingLarge * 1.5),
-              Center(
-                child: CustomWaveButton(
-                  text: 'Sign up',
-                  onTap: () => controller.signup(context),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                ),
-              ),
-              SizedBox(height: AppDimensions.paddingLarge),
-              Center(
-                child: Text.rich(
-                  TextSpan(
-                    text: "Already have an account? ",
-                    style: FontUtils.bodyTextSmall,
-                    children: [
-                      TextSpan(
-                        text: 'Login',
-                        style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            context.pop();
-                          },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAuthHeader(
+              title: 'Create an Account', // Title for signup screen
+              showBackButton: true, // Show back button on signup
+            ),
+            Padding( // Add padding around the rest of the content
+              padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingLarge),
+              child: Form(
+                key: controller.signupFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: AppDimensions.paddingLarge), // Space below header
+                    AppTextFormField(
+                      controller: controller.fullNameController,
+                      hintText: 'Full Name',
+                      prefixIcon: FontAwesomeIcons.user,
+                      validationType: InputValidationType.name,
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    AppTextFormField(
+                      controller: controller.phoneController,
+                      hintText: 'Phone number',
+                      prefixIcon: FontAwesomeIcons.phone,
+                      keyboardType: TextInputType.phone,
+                      validationType: InputValidationType.phoneNumber,
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    AppTextFormField(
+                      controller: controller.emailController,
+                      hintText: 'Email Address (Optional)',
+                      prefixIcon: FontAwesomeIcons.envelope,
+                      keyboardType: TextInputType.emailAddress,
+                      validationType: InputValidationType.email,
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    Obx(() => AppTextFormField(
+                      controller: controller.passwordController,
+                      hintText: 'Password',
+                      prefixIcon: FontAwesomeIcons.lock,
+                      obscureText: controller.obscurePassword.value,
+                      onToggleObscureText: controller.togglePasswordVisibility,
+                      validationType: InputValidationType.password,
+                    )),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    Obx(() => AppTextFormField(
+                      controller: controller.confirmPasswordController,
+                      hintText: 'Confirm Password',
+                      prefixIcon: FontAwesomeIcons.lock,
+                      obscureText: controller.obscureConfirmPassword.value,
+                      onToggleObscureText: controller.toggleConfirmPasswordVisibility,
+                      validationType: InputValidationType.confirmPassword,
+                      customValidator: controller.confirmPasswordValidator,
+                    )),
+                    SizedBox(height: AppDimensions.paddingLarge * 1.5),
+                    Center(
+                      child: CustomWaveButton(
+                        text: 'Sign up',
+                        onTap: () => controller.signup(context),
+                        width: MediaQuery.of(context).size.width * 0.8,
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: AppDimensions.paddingLarge),
+                    Center(
+                      child: Text.rich(
+                        TextSpan(
+                          text: "Already have an account? ",
+                          style: FontUtils.bodyTextSmall,
+                          children: [
+                            TextSpan(
+                              text: 'Login',
+                              style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  context.pop();
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    Center(
+                      child: Text(
+                        'Or sign up with',
+                        style: FontUtils.bodyTextSmall.copyWith(color: AppColors.mediumGrey),
+                      ),
+                    ),
+                    SizedBox(height: AppDimensions.paddingDefault),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildSocialIconFA(
+                          FontAwesomeIcons.google,
+                          AppColors.primaryBlue,
+                              () { /* Google sign-up logic */ },
+                        ),
+                        SizedBox(width: AppDimensions.paddingDefault),
+                        _buildSocialIconFA(
+                          FontAwesomeIcons.facebookF,
+                          const Color(0xFF1877F2),
+                              () { /* Facebook sign-up logic */ },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: AppDimensions.paddingLarge),
+                  ],
                 ),
               ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              Center(
-                child: Text(
-                  'Or sign up with',
-                  style: FontUtils.bodyTextSmall.copyWith(color: AppColors.mediumGrey),
-                ),
-              ),
-              SizedBox(height: AppDimensions.paddingDefault),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildSocialIconFA(
-                    FontAwesomeIcons.google,
-                    AppColors.primaryBlue,
-                        () { /* Google sign-up logic */ },
-                  ),
-                  SizedBox(width: AppDimensions.paddingDefault),
-                  _buildSocialIconFA(
-                    FontAwesomeIcons.facebookF,
-                    const Color(0xFF1877F2),
-                        () { /* Facebook sign-up logic */ },
-                  ),
-                ],
-              ),
-              SizedBox(height: AppDimensions.paddingLarge),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

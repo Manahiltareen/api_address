@@ -4,10 +4,6 @@ import 'package:api_address/config/font_utils.dart';
 import 'package:chaos_wave_button/chaos_wave_button.dart';
 import 'package:flutter/material.dart';
 
-
-
-
-
 class CustomWaveButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
@@ -26,17 +22,47 @@ class CustomWaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WaveButton(
+    return Container( // Wrap WaveButton in a Container to apply gradient
       width: width ?? MediaQuery.of(context).size.width * 0.8,
       height: height ?? AppDimensions.buttonHeight,
-      text: text,
-      textStyle: textStyle ?? FontUtils.buttonText,
-      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusDefault),
-      border: Border.all(color: AppColors.primaryBlue),
-      backgroundColor: AppColors.primaryBlue,
-      lineColors: const [AppColors.primaryBlue, AppColors.accentBlue, AppColors.primaryBlue],
-      animationDuration: const Duration(milliseconds: 500),
-      onTap: onTap,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusDefault),
+        gradient: const LinearGradient(
+          colors: [
+            AppColors.primaryBlue, // Use your primary blue
+            AppColors.accentBlue,  // A darker purple/indigo
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: WaveButton(
+        // WaveButton itself should be transparent and fill its parent
+        width: double.infinity, // Make it fill the Container's width
+        height: double.infinity, // Make it fill the Container's height
+        text: text,
+        textStyle: textStyle ?? FontUtils.buttonText,
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusDefault),
+        backgroundColor: Colors.transparent, // Crucial: make WaveButton's background transparent
+        // Define colorful lineColors for the wave effect
+        lineColors: const [
+          Color(0xFFFFD700), // Gold
+          Color(0xFFFF4500), // OrangeRed
+          Color(0xFF00CED1), // DarkTurquoise
+          Color(0xFF9400D3), // DarkViolet
+        ],
+        animationDuration: const Duration(milliseconds: 500),
+        onTap: onTap,
+      ),
     );
   }
 }
