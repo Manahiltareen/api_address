@@ -46,8 +46,8 @@ class CustomWaveButton extends StatelessWidget {
         ],
       ),
       child: WaveButton(
-        // WaveButton itself should be transparent and fill its parent
-        width: double.infinity, // Make it fill the Container's width
+
+        width: double.infinity,
         height: double.infinity, // Make it fill the Container's height
         text: text,
         textStyle: textStyle ?? FontUtils.buttonText,

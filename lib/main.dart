@@ -1,10 +1,14 @@
 import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/font_utils.dart';
-import 'package:api_address/config/go_router.dart';
+import 'package:api_address/views/auth/login_screen.dart';
+import 'package:api_address/views/home/testaddress.dart';
+import 'package:api_address/views/routes/go_router.dart';
 import 'package:flutter/material.dart';
- // Import your GoRouter config
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -13,14 +17,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router( // Use MaterialApp.router for GoRouter
+    return GetMaterialApp(
       title: 'Address App',
       debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
+      // initialRoute: Routes.login,
+      // getPages: AppPages.routes,
       theme: ThemeData(
-        primarySwatch: Colors.blue, // Can be refined using AppColors.primaryBlue
+        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Roboto', // Or a custom font declared in pubspec.yaml
-        scaffoldBackgroundColor: AppColors.lightBackground, // Use a global background color
+        fontFamily: 'Roboto',
+        scaffoldBackgroundColor: AppColors.white,
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.white,
           elevation: 0,
@@ -28,7 +35,6 @@ class MyApp extends StatelessWidget {
           titleTextStyle: FontUtils.appBarTitle,
         ),
       ),
-      routerConfig: AppRouter.router,
     );
   }
 }

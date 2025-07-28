@@ -2,6 +2,7 @@
 import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/font_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 
@@ -19,7 +20,7 @@ class CustomAuthHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
-      clipper: WaveClipper(), // Use the refined WaveClipper
+      clipper: WaveClipper(),
       child: Container(
         height: 200, // Consistent height
         width: double.infinity,
@@ -62,7 +63,7 @@ class CustomAuthHeader extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Get.back;
                   },
                 ),
               ),
@@ -78,12 +79,8 @@ class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height * 0.6); // Start higher to give more room for the wave to descend
+    path.lineTo(0, size.height * 0.6);
 
-    // A series of quadratic bezier curves for a smooth, natural flow
-    // These points are carefully chosen to create a substantial, flowing bottom without awkward bulges.
-
-    // First curve: gentle dip
     var controlPoint1 = Offset(size.width * 0.2, size.height * 0.85);
     var endPoint1 = Offset(size.width * 0.4, size.height * 0.7);
     path.quadraticBezierTo(
@@ -93,8 +90,8 @@ class WaveClipper extends CustomClipper<Path> {
       endPoint1.dy,
     );
 
-    // Second curve: deeper, main swell
-    var controlPoint2 = Offset(size.width * 0.6, size.height * 1.0); // Pushes down to create fullness
+
+    var controlPoint2 = Offset(size.width * 0.6, size.height * 1.0);
     var endPoint2 = Offset(size.width * 0.8, size.height * 0.8);
     path.quadraticBezierTo(
       controlPoint2.dx,

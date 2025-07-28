@@ -2,6 +2,7 @@ import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/app_dimensions.dart';
 import 'package:api_address/config/font_utils.dart';
 import 'package:api_address/controllers/signup_controller.dart';
+import 'package:api_address/views/routes/go_router.dart';
 import 'package:api_address/views/shared/custom_auth_header.dart';
 import 'package:api_address/views/shared/custom_button.dart';
 import 'package:api_address/views/shared/text_form_field.dart';
@@ -27,17 +28,17 @@ class SignupScreen extends StatelessWidget {
     final SignupController controller = Get.put(SignupController());
 
     return Scaffold(
-      backgroundColor: AppColors.lightBackground, // Use light background for the rest of the screen
-      // No AppBar when using custom header
+      backgroundColor: AppColors.lightBackground,
+
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomAuthHeader(
-              title: 'Create an Account', // Title for signup screen
-              showBackButton: true, // Show back button on signup
+              title: 'Create an Account',
+              showBackButton: true,
             ),
-            Padding( // Add padding around the rest of the content
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingLarge),
               child: Form(
                 key: controller.signupFormKey,
@@ -106,7 +107,7 @@ class SignupScreen extends StatelessWidget {
                               style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  context.pop();
+                                  Get.toNamed(Routes.login);
                                 },
                             ),
                           ],
@@ -127,13 +128,13 @@ class SignupScreen extends StatelessWidget {
                         _buildSocialIconFA(
                           FontAwesomeIcons.google,
                           AppColors.primaryBlue,
-                              () { /* Google sign-up logic */ },
+                              () {  },
                         ),
                         SizedBox(width: AppDimensions.paddingDefault),
                         _buildSocialIconFA(
                           FontAwesomeIcons.facebookF,
                           const Color(0xFF1877F2),
-                              () { /* Facebook sign-up logic */ },
+                              () {  },
                         ),
                       ],
                     ),

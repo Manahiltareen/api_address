@@ -6,8 +6,8 @@ class WaveButtonController extends GetxController {
 
   void handleTap(VoidCallback callback) {
     isTapped.value = true;
-    callback(); // Call your original onTap
-    Future.delayed(const Duration(milliseconds: 300), () {
+    callback();
+    Future.delayed(const Duration(milliseconds: 150), () {
       isTapped.value = false;
     });
   }

@@ -17,8 +17,8 @@ enum InputValidationType {
   none,
 }
 
-class AppTextFormField extends StatelessWidget {
-  final TextEditingController controller;
+class CustomAddressField extends StatelessWidget {
+
   final String hintText;
   final IconData prefixIcon;
   final TextInputType keyboardType;
@@ -28,9 +28,9 @@ class AppTextFormField extends StatelessWidget {
   final String? Function(String?)? customValidator;
   final ValueChanged<String>? onChanged;
 
-  const AppTextFormField({
+  const CustomAddressField({
     super.key,
-    required this.controller,
+
     required this.hintText,
     required this.prefixIcon,
     this.keyboardType = TextInputType.text,
@@ -38,7 +38,7 @@ class AppTextFormField extends StatelessWidget {
     this.onToggleObscureText,
     this.validationType = InputValidationType.none,
     this.customValidator,
-    this.onChanged,
+     required this.onChanged,
   });
 
   String? _validator(String? value) {
@@ -92,7 +92,7 @@ class AppTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
+
       keyboardType: keyboardType,
       obscureText: obscureText,
       style: FontUtils.inputText,
@@ -105,7 +105,7 @@ class AppTextFormField extends StatelessWidget {
         hintStyle: FontUtils.hintText,
         prefixIcon: Padding(
           padding: const EdgeInsets.only(
-            top: 6,
+              top: 6,
               left: 12.0, right: 8.0),
           child: FaIcon(
             prefixIcon,

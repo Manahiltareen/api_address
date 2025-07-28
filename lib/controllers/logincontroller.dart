@@ -1,5 +1,7 @@
+import 'package:api_address/views/routes/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginController extends GetxController {
@@ -8,31 +10,36 @@ class LoginController extends GetxController {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Observable for password visibility
+
   var obscureText = true.obs;
 
   void togglePasswordVisibility() {
     obscureText.value = !obscureText.value;
   }
 
-  void login(BuildContext context) { // Pass BuildContext for GoRouter
+  void login(BuildContext context) {
     if (loginFormKey.currentState!.validate()) {
-      // All inputs are valid
-      Get.snackbar(
-        'Success',
-        'Login successful!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-      print('Phone: ${phoneController.text}');
-      print('Password: ${passwordController.text}');
-      context.go('/home'); // Navigate using GoRouter
+      final _storage = GetStorage();
+      final phone = _storage.read('phoneNumber');
+      final password = _storage.read('password');
+      if(phoneController.text == phone && passwordController.text == password ){
+        Get.snackbar(
+          'Success',
+          'Login successful!',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+        Get.toNamed(Routes.AddAddress);
+      }
+      else {
+        Get.snackbar('Error', 'Invalid phone number or password.',
+            backgroundColor: Colors.red, colorText: Colors.white);
+      }
+
     } else {
       Get.snackbar(
         'Error',
         'Please correct the errors in the form.',
-        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

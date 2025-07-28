@@ -2,6 +2,8 @@ import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/app_dimensions.dart';
 import 'package:api_address/config/font_utils.dart';
 import 'package:api_address/controllers/logincontroller.dart';
+import 'package:api_address/views/auth/signup_screen.dart';
+import 'package:api_address/views/routes/go_router.dart';
 import 'package:api_address/views/shared/custom_auth_header.dart';
 import 'package:api_address/views/shared/custom_button.dart';
 import 'package:api_address/views/shared/text_form_field.dart';
@@ -29,8 +31,8 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomAuthHeader(
-              title: 'Welcome Back', // Title for login screen
-              showBackButton: false, // No back button on login for now (can change if needed)
+              title: 'Welcome Back',
+              showBackButton: false,
             ),
             Padding( // Add padding around the rest of the content
               padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingLarge),
@@ -93,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                               style: FontUtils.linkText.copyWith(fontSize: FontUtils.bodyTextSmall.fontSize),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  context.go('/signup');
+                                  Get.to(SignupScreen());
                                 },
                             ),
                           ],

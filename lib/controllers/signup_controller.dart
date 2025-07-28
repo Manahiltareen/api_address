@@ -1,5 +1,8 @@
+import 'package:api_address/views/home/testaddress.dart';
+import 'package:api_address/views/routes/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class SignupController extends GetxController {
@@ -22,7 +25,7 @@ class SignupController extends GetxController {
     obscureConfirmPassword.value = !obscureConfirmPassword.value;
   }
 
-  // Custom validator for confirm password
+
   String? confirmPasswordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please confirm your password';
@@ -35,19 +38,22 @@ class SignupController extends GetxController {
 
   void signup(BuildContext context) {
     if (signupFormKey.currentState!.validate()) {
-      // The confirmPasswordValidator is now part of the AppTextFormField's validator chain
-      // so the check here should ideally not be needed if the form is already valid.
-      // However, keeping it as an extra safeguard is fine.
+
       if (passwordController.text != confirmPasswordController.text) {
         Get.snackbar(
           'Error',
           'Passwords do not match!',
-          snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
         return;
       }
+      final _storage = GetStorage();
+      _storage.write('name', fullNameController.text);
+      _storage.write('email', emailController.text);
+      _storage.write('phoneNumber', phoneController.text);
+      _storage.write('password', passwordController.text);
+      _storage.write('ConfirmPassword', confirmPasswordController.text);
 
       Get.snackbar(
         'Success',
@@ -56,11 +62,8 @@ class SignupController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      print('Full Name: ${fullNameController.text}');
-      print('Phone: ${phoneController.text}');
-      print('Email: ${emailController.text}');
-      print('Password: ${passwordController.text}');
-      context.go('/home');
+
+      Get.to(AddAddressScreen());
     } else {
       Get.snackbar(
         'Error',
