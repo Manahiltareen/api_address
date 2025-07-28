@@ -158,17 +158,17 @@ class AddressCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          address.label, // Use 'label' from the new model
+                          address.label,
                           style: FontUtils.subheading2.copyWith(color: AppColors.darkGrey),
                         ),
                         const SizedBox(height: AppDimensions.paddingSmall / 2),
                         Text(
-                          '${address.addressLine}, ${address.city}, ${address.state} - ${address.postalCode}', // Use new fields
+                          '${address.addressLine}, ${address.city}, ${address.state} - ${address.postalCode}',
                           style: FontUtils.bodyTextSmall.copyWith(color: AppColors.mediumGrey),
                         ),
                         const SizedBox(height: AppDimensions.paddingSmall / 2),
                         Text(
-                          'Phone ${address.phoneNumber ?? 'null'}', // Use 'phoneNumber' from the new model
+                          'Phone ${address.phoneNumber ?? 'null'}', 
                           style: FontUtils.bodyTextSmall.copyWith(color: AppColors.mediumGrey),
                         ),
                       ],
