@@ -1,18 +1,19 @@
 // import 'package:api_address/services/api_add_address_service.dart';
+// import 'package:api_address/services/testservice.dart';
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:get_storage/get_storage.dart';
 // class AddAddressController extends GetxController {
-//   // Rx<bool> isLoading = false.obs;
-//   // Rx<TextEditingController> fullName = TextEditingController().obs;
-//   // Rx<TextEditingController>phoneNumber = TextEditingController().obs;
-//   // Rx<TextEditingController> city = TextEditingController().obs;
-//   // Rx<TextEditingController> address = TextEditingController().obs;
-//   // Rx<TextEditingController> label= TextEditingController().obs;
-//   // Rx<TextEditingController> state= TextEditingController().obs;
-//   // Rx<TextEditingController> postalCode= TextEditingController().obs;
-//   // Rx<TextEditingController> latitude= TextEditingController().obs;
-//   // Rx<TextEditingController> longitude= TextEditingController().obs;
+//   Rx<bool> isLoading = false.obs;
+//   Rx<TextEditingController> fullName = TextEditingController().obs;
+//   Rx<TextEditingController>phoneNumber = TextEditingController().obs;
+//   Rx<TextEditingController> city = TextEditingController().obs;
+//   Rx<TextEditingController> address = TextEditingController().obs;
+//   Rx<TextEditingController> label= TextEditingController().obs;
+//   Rx<TextEditingController> state= TextEditingController().obs;
+//   Rx<TextEditingController> postalCode= TextEditingController().obs;
+//   Rx<TextEditingController> latitude= TextEditingController().obs;
+//   Rx<TextEditingController> longitude= TextEditingController().obs;
 //   Rx<bool> isLoading = false.obs;
 //   var city = "".obs;
 //   var addressLine = "".obs;
@@ -28,24 +29,21 @@
 //
 //   void submitAddress() async {
 //     isLoading.value = true;
-//     //
-//     // final userId = await _storage.read('userid');
-//     // if (userId == null) {
-//     //   Get.snackbar('Error', 'Data not stored!');
-//     //   isLoading.value = false;
-//     //   return;
-//     // }
+//
+//     final userId = await _storage.read('userid');
+//     if (userId == null) {
+//       Get.snackbar('Error', 'Data not stored!');
+//       isLoading.value = false;
+//       return;
+//     }
 //     try {
 //       final addressId = await _repository.addAddress(
 //         postalCode: postalCode.value,
 //         state: state.value,
 //         label:label.value ,
-//         // userId: userId,
-//         // fullName: fullName.string,
-//         // phoneNumber: phoneNumber.string,
 //         city: city.value,
 //         address: addressLine.value, latitude: latitude.value,
-//         longitude: longitude.value,
+//         longitude: longitude.value, user_id: '10',
 //       );
 //
 //       Get.snackbar('Success', 'Address submitted ID: $addressId');

@@ -1,8 +1,10 @@
 import 'package:api_address/controllers/AddAddressController.dart';
+import 'package:api_address/controllers/get_address_controller.dart';
 import 'package:api_address/controllers/testaddresscontroll.dart';
 import 'package:api_address/views/home/manage_addresses.dart';
 import 'package:api_address/views/shared/custom_address_field.dart';
 import 'package:api_address/views/shared/custom_button.dart';
+import 'package:api_address/views/shared/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +18,8 @@ class AddAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // controllers name meaning full
+    AddressController addressController=Get.put(AddressController());
     final AddAddressController controller = Get.put(AddAddressController());
 
     return Scaffold(
@@ -95,8 +99,12 @@ class AddAddressScreen extends StatelessWidget {
 
                   ),
                   SizedBox(height: AppDimensions.paddingDefault),
+TextFormField(
+  controller: addressController.na,
+)
+                  AppTextFormField(
+                    controller: addressController.,
 
-                  CustomAddressField(
                     hintText: 'City',
                     prefixIcon: FontAwesomeIcons.building,
                     validationType: InputValidationType.normal,
@@ -178,3 +186,31 @@ class AddAddressScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+class Test extends StatelessWidget {
+  const Test({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    AddAddressController addressController=Get.put(AddAddressController());
+    return Scaffold(
+      body: TextFormField(
+        controller: addressController.nameController,
+      ),
+    );
+  }
+}
+
+
+
