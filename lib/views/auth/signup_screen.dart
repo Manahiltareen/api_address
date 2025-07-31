@@ -1,6 +1,7 @@
 import 'package:api_address/config/app_colors.dart';
 import 'package:api_address/config/app_dimensions.dart';
 import 'package:api_address/config/font_utils.dart';
+import 'package:api_address/controllers/number_controller.dart';
 import 'package:api_address/controllers/signup_controller.dart';
 import 'package:api_address/views/routes/go_router.dart';
 import 'package:api_address/views/shared/custom_auth_header.dart';
@@ -26,6 +27,8 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SignupController controller = Get.put(SignupController());
+    final RegistrationController registrationController = Get.put(RegistrationController());
+
 
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
@@ -54,7 +57,7 @@ class SignupScreen extends StatelessWidget {
                     ),
                     SizedBox(height: AppDimensions.paddingDefault),
                     AppTextFormField(
-                      controller: controller.phoneController,
+                      controller: registrationController.mobileNumber,
                       hintText: 'Phone number',
                       prefixIcon: FontAwesomeIcons.phone,
                       keyboardType: TextInputType.phone,
@@ -91,7 +94,10 @@ class SignupScreen extends StatelessWidget {
                     Center(
                       child: CustomWaveButton(
                         text: 'Sign up',
-                        onTap: () => controller.signup(context),
+                        onTap: () {
+                           controller.signup(context);
+                        },
+
                         width: MediaQuery.of(context).size.width * 0.8,
                       ),
                     ),

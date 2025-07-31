@@ -1,11 +1,11 @@
 import 'package:api_address/models/address_model.dart';
-import 'package:api_address/services/address_services.dart';
+import 'package:api_address/repositories/address_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:dio/dio.dart';
 
-class AddressController extends GetxController {
+class GetAddressController extends GetxController {
   final AddressService _addressService = AddressService();
 
   final RxList<Address> addresses = <Address>[].obs;

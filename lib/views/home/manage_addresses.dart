@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 class ManageAddressScreen extends StatelessWidget {
   ManageAddressScreen({Key? key}) : super(key: key);
 
-  final AddressController addressController = Get.put(AddressController());
+  final GetAddressController addressController = Get.put(GetAddressController());
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class ManageAddressScreen extends StatelessWidget {
 
 class AddressCard extends StatelessWidget {
   final Address address;
-  final AddressController addressController = Get.find();
+  final GetAddressController addressController = Get.find();
 
   AddressCard({Key? key, required this.address}) : super(key: key);
 
