@@ -28,9 +28,10 @@ class AppColors {
   static const Color neumorphicLightShadow = Color(0xFFFFFFFF); // Lighter shadow color
   static const Color neumorphicDarkShadow = Color(0xFFA7A7A7); // Darker shadow color (adjust opacity if needed)
   static const Color blueColor = Color(0xFF283891);
+  
   static const Color redColor = Color(0xFFFF6969);
   static const Color greyColor = Color(0xFFF3F3F3);
-  static const Color darkGrey = Color(0xffF4F5F9);
+
   static const Color pinkColor = Color(0xffFFE2E2);
   static const lightGreyColor = Color(0xFFF5F5F5);
   static const textColor = Color(0xFF212121);
