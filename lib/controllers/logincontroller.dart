@@ -16,7 +16,7 @@ class LoginController extends GetxController {
   void togglePasswordVisibility() {
     obscureText.value = !obscureText.value;
   }
-
+//comment
   void login(BuildContext context) {
     if (loginFormKey.currentState!.validate()) {
       final _storage = GetStorage();
